@@ -15,8 +15,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en' data-theme='emerald'>
       <body className='flex flex-row'>
-        <Navbar />
-        <main className='bg-white flex-1'>{children}</main>
+        <Navbar sizeClass='w-28 h-full bg-gray-100 fixed' />
+        <main className='ml-28 bg-white flex-1'>{children}</main>
       </body>
     </html>
   );
