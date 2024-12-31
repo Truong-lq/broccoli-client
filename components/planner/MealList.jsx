@@ -32,7 +32,7 @@ const MealList = ({ meals }) => {
                 className='flex gap-6 hover:bg-gray-200 px-8 py-3 cursor-pointer transition-colors'
               >
                 <img
-                  src={`/${index + 1}.jpg`}
+                  src={`/images/${meal.id}.jpg`}
                   alt={meal.name}
                   className='rounded-md w-36 h-24 object-cover'
                 />
