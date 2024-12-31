@@ -1,26 +1,15 @@
-import { useMemo } from 'react';
-import PieChart from './PieChart';
-import { macroNutrients } from '../../utils/constants';
+import { useMemo } from "react";
+import PieChart from "./PieChart";
+import { macroNutrients } from "../../utils/constants";
+import { toOneFloatPoint } from "../../utils/format";
 
-const NutritionSummary = ({ meals }) => {
-  // Calculate the total of each macro nutrient
-  const handledMacros = useMemo(
-    () =>
-      meals.reduce((acc, meal) => {
-        macroNutrients.forEach((nutrient) => {
-          acc[nutrient] = (acc[nutrient] || 0) + meal?.nutrients[nutrient];
-        });
-        return acc;
-      }, {}),
-    [meals]
-  );
-
+const NutritionSummary = ({ data }) => {
   // Resolve the color of each macro nutrient
   const resolveColor = useMemo(() => {
     const colors = {
-      carbs: 'bg-orange-400',
-      protein: 'bg-cyan-500',
-      fat: 'bg-red-500'
+      carbs: "bg-orange-400",
+      protein: "bg-cyan-500",
+      fat: "bg-red-500",
     };
 
     return (nutrient) => colors[nutrient];
@@ -28,21 +17,17 @@ const NutritionSummary = ({ meals }) => {
 
   return (
     <div>
-      <PieChart data={handledMacros} />
+      <PieChart data={data} />
 
       {/* Macro nutrients group */}
-      <div className='mt-7 mx-auto max-w-44'>
-        <span className='text-right block mb-2 font-semibold text-lg'>
-          Totals
-        </span>
+      <div className='mt-7 mx-auto max-w-48'>
+        <span className='text-right block mb-2 font-semibold text-lg'>Total</span>
 
         {macroNutrients.map((nutrient) =>
-          nutrient === 'calories' ? (
+          nutrient === "calories" ? (
             <div key={nutrient} className='flex justify-between mt-1'>
-              <span className='capitalize font-semibold relative text-lg'>
-                {nutrient}
-              </span>
-              <span className='text-lg'>{handledMacros[nutrient]}</span>
+              <span className='capitalize font-semibold relative text-lg'>{nutrient}</span>
+              <span className='text-lg'>{toOneFloatPoint(data[nutrient])}kCal</span>
             </div>
           ) : (
             <div key={nutrient} className='flex justify-between mt-1'>
@@ -54,7 +39,7 @@ const NutritionSummary = ({ meals }) => {
                   )}`}
                 ></span>
               </span>
-              <span className='text-lg'>{handledMacros[nutrient]}g</span>
+              <span className='text-lg'>{toOneFloatPoint(data[nutrient])}g</span>
             </div>
           )
         )}
