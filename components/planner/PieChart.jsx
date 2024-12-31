@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from 'react';
-import Chart from 'chart.js/auto';
-import capitalize from '../../utils/stringCapitalize';
-import { pieChartColors as colors } from '../../utils/constants';
+import { useEffect, useMemo, useRef } from "react";
+import Chart from "chart.js/auto";
+import { capitalize, toOneFloatPoint } from "../../utils/format";
+import { pieChartColors as colors } from "../../utils/constants";
 
 const PieChart = ({ data }) => {
   const chartRef = useRef(null);
@@ -12,15 +12,15 @@ const PieChart = ({ data }) => {
     const values = [];
 
     Object.entries(data).forEach((nutrient) => {
-      if (nutrient[0] === 'calories') return;
+      if (["fiber", "calories"].includes(nutrient[0])) return;
 
-      if (nutrient[0] === 'fat') {
+      if (nutrient[0] === "fat") {
         nutrient[1] = nutrient[1] * 9;
       } else {
         nutrient[1] = nutrient[1] * 4;
       }
-      
-      values.push(Number(nutrient[1] / data.calories).toFixed(2) * 100);
+
+      values.push(toOneFloatPoint(nutrient[1] / data.calories) * 100);
       labels.push(capitalize(nutrient[0]));
     });
 
@@ -28,20 +28,20 @@ const PieChart = ({ data }) => {
   }, [data]);
 
   useEffect(() => {
-    const ctx = chartRef.current.getContext('2d');
+    const ctx = chartRef.current.getContext("2d");
     const chart = new Chart(ctx, {
-      type: 'pie',
+      type: "pie",
       data: {
         labels,
         datasets: [
           {
-            label: 'Percentage',
+            label: "Percentage",
             data: values,
             backgroundColor: Object.values(colors),
-            hoverOffset: 4
-          }
-        ]
-      }
+            hoverOffset: 4,
+          },
+        ],
+      },
     });
 
     // Destroy chart component unmounts
