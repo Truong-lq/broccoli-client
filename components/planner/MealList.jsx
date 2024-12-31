@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShuffle } from "@fortawesome/free-solid-svg-icons";
 import { mealTimes } from "../../utils/constants";
@@ -32,12 +31,10 @@ const MealList = ({ meals }) => {
                 key={meal.name}
                 className='flex gap-6 hover:bg-gray-200 px-8 py-3 cursor-pointer transition-colors'
               >
-                <Image
-                  src='/temp.jpg'
+                <img
+                  src={meal.img_url}
                   alt={meal.name}
-                  width={100}
-                  height={100}
-                  className='rounded-md w-24 h-18 object-cover'
+                  className='rounded-md w-36 h-24 object-cover'
                 />
                 <div>
                   <p className='font-semibold line-clamp-1 max-w-64'>{meal.name}</p>
