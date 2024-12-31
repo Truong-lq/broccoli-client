@@ -6,7 +6,7 @@ import { toOneFloatPoint } from "../../utils/format";
 const MealList = ({ meals }) => {
   return (
     <ul className='flex flex-col gap-4'>
-      {mealTimes.map((mealTime) => {
+      {mealTimes.map((mealTime, index) => {
         // Group meals based on meal time
         const groupedMeals = meals.filter((meal) => meal.meal_time === mealTime);
 
@@ -32,7 +32,7 @@ const MealList = ({ meals }) => {
                 className='flex gap-6 hover:bg-gray-200 px-8 py-3 cursor-pointer transition-colors'
               >
                 <img
-                  src={meal.img_url}
+                  src={`/${index + 1}.jpg`}
                   alt={meal.name}
                   className='rounded-md w-36 h-24 object-cover'
                 />
